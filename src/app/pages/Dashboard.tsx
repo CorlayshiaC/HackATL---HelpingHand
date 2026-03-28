@@ -3,10 +3,11 @@ import { useNavigate, Link } from 'react-router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { fetchWithAuth, supabase } from '../lib/supabase';
+import { fetchPublic, supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 import { Loader2, Search, Plus, MapPin, Heart, TrendingUp } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { UserStats } from '../components/UserStats';
 
 const CATEGORIES = [
   { id: 'education', label: 'Education & Learning', emoji: '📚' },
@@ -61,7 +62,7 @@ export function Dashboard() {
   const loadCampaigns = async () => {
     setLoading(true);
     try {
-      const response = await fetchWithAuth('/campaigns');
+      const response = await fetchPublic('/campaigns');
       setCampaigns(response.campaigns || []);
       setFilteredCampaigns(response.campaigns || []);
     } catch (error: any) {
@@ -88,7 +89,15 @@ export function Dashboard() {
             </p>
           </div>
 
-          {/* Stats */}
+          {/* User Stats (only shown when logged in) */}
+          {user && (
+            <>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Impact</h2>
+              <UserStats />
+            </>
+          )}
+
+          {/* General Stats */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <Card className="bg-white border-gray-200">
               <CardHeader className="flex flex-row items-center justify-between pb-2">

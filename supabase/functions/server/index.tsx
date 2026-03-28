@@ -48,6 +48,10 @@ async function initializePlaceholderCampaigns() {
           creatorName: "Green Spaces Initiative",
           createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/garden-revival",
+          needType: "both", // money, volunteer, goods, both
+          volunteerNeeds: "Weekend garden maintenance, planting help",
+          urgent: false,
+          campaignType: "organization", // organization or personal
         },
         {
           id: "campaign:placeholder-2",
@@ -56,12 +60,16 @@ async function initializePlaceholderCampaigns() {
           category: "technology",
           goalAmount: 25000,
           currentAmount: 12000,
-          location: { lat: 40.7128, lng: -74.0060 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Future Coders",
           createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/youth-tech",
+          needType: "both",
+          volunteerNeeds: "Coding instructors, laptop setup assistance",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-3",
@@ -70,12 +78,16 @@ async function initializePlaceholderCampaigns() {
           category: "seniors",
           goalAmount: 10000,
           currentAmount: 7200,
-          location: { lat: 34.0522, lng: -118.2437 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Meals on Wheels Community",
           createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/senior-meals",
+          needType: "both",
+          volunteerNeeds: "Meal delivery drivers (2 hours/week)",
+          urgent: true,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-4",
@@ -84,12 +96,16 @@ async function initializePlaceholderCampaigns() {
           category: "animals",
           goalAmount: 50000,
           currentAmount: 28000,
-          location: { lat: 41.8781, lng: -87.6298 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Paws & Hearts Shelter",
           createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/animal-shelter",
+          needType: "both",
+          volunteerNeeds: "Pet socialization, cleaning help, adoption event staff",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-5",
@@ -98,12 +114,16 @@ async function initializePlaceholderCampaigns() {
           category: "arts",
           goalAmount: 8000,
           currentAmount: 2500,
-          location: { lat: 39.7392, lng: -104.9903 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Arts for All Kids",
           createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/kids-art",
+          needType: "both",
+          volunteerNeeds: "Art instructors, material organization",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-6",
@@ -112,12 +132,16 @@ async function initializePlaceholderCampaigns() {
           category: "housing",
           goalAmount: 12000,
           currentAmount: 9800,
-          location: { lat: 47.6062, lng: -122.3321 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Safe Harbor Shelter",
           createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/safe-harbor",
+          needType: "goods",
+          goodsNeeded: "Blankets, winter coats (sizes M-XXL), warm socks",
+          urgent: true,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-7",
@@ -126,12 +150,15 @@ async function initializePlaceholderCampaigns() {
           category: "health",
           goalAmount: 35000,
           currentAmount: 15000,
-          location: { lat: 29.7604, lng: -95.3698 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Community Care Clinic",
           createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/health-clinic",
+          needType: "money",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-8",
@@ -140,12 +167,17 @@ async function initializePlaceholderCampaigns() {
           category: "education",
           goalAmount: 6000,
           currentAmount: 4200,
-          location: { lat: 42.3601, lng: -71.0589 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Lincoln Elementary PTA",
           createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/school-books",
+          needType: "both",
+          volunteerNeeds: "Book sorting and cataloging",
+          goodsNeeded: "New or gently used children's books",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-9",
@@ -154,12 +186,16 @@ async function initializePlaceholderCampaigns() {
           category: "food",
           goalAmount: 20000,
           currentAmount: 11000,
-          location: { lat: 33.4484, lng: -112.0740 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Valley Food Bank",
           createdAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/food-bank",
+          needType: "both",
+          volunteerNeeds: "Food sorting and distribution (4 hour shifts)",
+          urgent: true,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-10",
@@ -168,12 +204,16 @@ async function initializePlaceholderCampaigns() {
           category: "youth",
           goalAmount: 7500,
           currentAmount: 3200,
-          location: { lat: 39.9612, lng: -82.9988 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Youth Sports Alliance",
           createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/youth-sports",
+          needType: "both",
+          volunteerNeeds: "Coaches and referees for weekend games",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-11",
@@ -182,12 +222,16 @@ async function initializePlaceholderCampaigns() {
           category: "community",
           goalAmount: 40000,
           currentAmount: 18500,
-          location: { lat: 37.7749, lng: -122.4194 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Mission District Community Center",
           createdAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/community-center",
+          needType: "both",
+          volunteerNeeds: "Construction volunteers, painters",
+          urgent: false,
+          campaignType: "organization",
         },
         {
           id: "campaign:placeholder-12",
@@ -196,12 +240,69 @@ async function initializePlaceholderCampaigns() {
           category: "disaster",
           goalAmount: 30000,
           currentAmount: 22000,
-          location: { lat: 30.2672, lng: -97.7431 },
+          location: { lat: 33.7490, lng: -84.3880 },
           locationName: "Atlanta, GA",
           creatorId: "system",
           creatorName: "Emergency Relief Network",
           createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
           orgWebsite: "https://example.org/disaster-relief",
+          needType: "both",
+          volunteerNeeds: "Emergency responders, supply distribution",
+          goodsNeeded: "Non-perishable food, water, first aid supplies",
+          urgent: true,
+          campaignType: "organization",
+        },
+        {
+          id: "campaign:personal-1",
+          title: "Help Sarah's Family After House Fire",
+          description: "Our neighbor Sarah and her two children lost everything in a devastating house fire last week. They need help rebuilding their lives with basic necessities, clothing, and temporary housing costs.",
+          category: "disaster",
+          goalAmount: 8000,
+          currentAmount: 3400,
+          location: { lat: 33.7490, lng: -84.3880 },
+          locationName: "Atlanta, GA",
+          creatorId: "user:sarah-helper",
+          creatorName: "Community for Sarah",
+          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          needType: "both",
+          goodsNeeded: "Children's clothing (ages 6 and 9), household items",
+          urgent: true,
+          campaignType: "personal",
+          personalStory: "Sarah is a single mother who has always been there for our community. Now she needs our help.",
+        },
+        {
+          id: "campaign:personal-2",
+          title: "Medical Bills for David's Cancer Treatment",
+          description: "David is a beloved teacher in our community facing mounting medical bills from cancer treatment. Every contribution helps ease the financial burden during this difficult time.",
+          category: "health",
+          goalAmount: 15000,
+          currentAmount: 6800,
+          location: { lat: 33.7490, lng: -84.3880 },
+          locationName: "Atlanta, GA",
+          creatorId: "user:david-friend",
+          creatorName: "Friends of David",
+          createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+          needType: "money",
+          urgent: false,
+          campaignType: "personal",
+          personalStory: "David has inspired countless students over his 20-year teaching career. Let's support him now.",
+        },
+        {
+          id: "campaign:personal-3",
+          title: "Support Maria's College Dream",
+          description: "Maria is a first-generation college student with a full scholarship to MIT, but she needs help with living expenses, books, and supplies to make her dream a reality.",
+          category: "education",
+          goalAmount: 5000,
+          currentAmount: 2100,
+          location: { lat: 33.7490, lng: -84.3880 },
+          locationName: "Atlanta, GA",
+          creatorId: "user:maria-mentor",
+          creatorName: "Maria's Mentors",
+          createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          needType: "money",
+          urgent: false,
+          campaignType: "personal",
+          personalStory: "Maria has overcome incredible obstacles to achieve academic excellence. Help her continue her journey.",
         },
       ];
 
@@ -256,7 +357,9 @@ app.post("/make-server-0f0fb175/signup", async (c) => {
 // Get all campaigns
 app.get("/make-server-0f0fb175/campaigns", async (c) => {
   try {
+    console.log("Fetching all campaigns...");
     const campaigns = await kv.getByPrefix("campaign:");
+    console.log(`Found ${campaigns.length} campaigns`);
     return c.json({ campaigns });
   } catch (error) {
     console.log("Error fetching campaigns:", error);
@@ -297,44 +400,72 @@ app.post("/make-server-0f0fb175/campaigns", async (c) => {
 // AI matching endpoint - matches user preferences with campaigns
 app.post("/make-server-0f0fb175/match", async (c) => {
   try {
+    console.log("Match request received");
     const { preferences, location } = await c.req.json();
+    console.log("Preferences:", preferences);
+    console.log("Location:", location);
     
     // Get all campaigns
     const allCampaigns = await kv.getByPrefix("campaign:");
+    console.log(`Total campaigns available: ${allCampaigns.length}`);
+    
+    // If no preferences or location provided, return all campaigns
+    if (!preferences || (!preferences.categories && !location)) {
+      console.log("No filters applied, returning all campaigns");
+      return c.json({ matches: allCampaigns });
+    }
     
     // Simple AI matching logic based on categories and location
     const matchedCampaigns = allCampaigns
       .filter((campaign: any) => {
-        // Match by categories
-        const categoryMatch = preferences.categories?.some((cat: string) =>
-          campaign.category === cat
-        );
+        // Match by categories (if provided)
+        let categoryMatch = true;
+        if (preferences.categories && preferences.categories.length > 0) {
+          categoryMatch = preferences.categories.some((cat: string) =>
+            campaign.category === cat
+          );
+        }
         
         // Match by location (if provided)
         let locationMatch = true;
-        if (location && campaign.location) {
-          // Simple distance calculation - in production, use proper geolocation
-          const distance = Math.sqrt(
-            Math.pow(campaign.location.lat - location.lat, 2) +
-            Math.pow(campaign.location.lng - location.lng, 2)
-          ) * 111; // Approximate km
+        if (location && location.lat && location.lng && campaign.location) {
+          // Calculate distance using Haversine formula approximation
+          const R = 3959; // Earth's radius in miles
+          const lat1 = location.lat * Math.PI / 180;
+          const lat2 = campaign.location.lat * Math.PI / 180;
+          const dLat = (campaign.location.lat - location.lat) * Math.PI / 180;
+          const dLng = (campaign.location.lng - location.lng) * Math.PI / 180;
           
-          locationMatch = distance <= (preferences.radius || 50); // Default 50km radius
+          const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1) * Math.cos(lat2) *
+                    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const distance = R * c; // Distance in miles
+          
+          const radiusInMiles = preferences.radius || 50;
+          locationMatch = distance <= radiusInMiles;
+          
+          console.log(`Campaign ${campaign.title}: distance=${distance.toFixed(1)} miles, radius=${radiusInMiles} miles, match=${locationMatch}`);
         }
         
         return categoryMatch && locationMatch;
       })
       .sort((a: any, b: any) => {
-        // Sort by relevance - prioritize campaigns that need funding
+        // Prioritize urgent campaigns
+        if (a.urgent && !b.urgent) return -1;
+        if (!a.urgent && b.urgent) return 1;
+        
+        // Then sort by funding need
         const aProgress = (a.currentAmount / a.goalAmount) * 100;
         const bProgress = (b.currentAmount / b.goalAmount) * 100;
         return aProgress - bProgress;
       });
     
+    console.log(`Matched ${matchedCampaigns.length} campaigns`);
     return c.json({ matches: matchedCampaigns });
   } catch (error) {
-    console.log("Error matching campaigns:", error);
-    return c.json({ error: "Failed to match campaigns" }, 500);
+    console.error("Error matching campaigns:", error);
+    return c.json({ error: `Failed to match campaigns: ${error.message}` }, 500);
   }
 });
 
@@ -397,6 +528,84 @@ app.get("/make-server-0f0fb175/my-campaigns", async (c) => {
   } catch (error) {
     console.log("Error fetching user campaigns:", error);
     return c.json({ error: "Failed to fetch campaigns" }, 500);
+  }
+});
+
+// Get user statistics (donations, campaigns supported, etc.)
+app.get("/make-server-0f0fb175/user-stats", async (c) => {
+  try {
+    const accessToken = c.req.header('Authorization')?.split(' ')[1];
+    const { data: { user }, error: authError } = await supabase.auth.getUser(accessToken);
+    
+    if (!user?.id || authError) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    // Get all donations by this user
+    const allDonations = await kv.getByPrefix("donation:");
+    const userDonations = allDonations.filter((d: any) => d.donorId === user.id);
+    
+    // Calculate total donated
+    const totalDonated = userDonations.reduce((sum: number, d: any) => sum + (d.amount || 0), 0);
+    
+    // Count unique campaigns donated to
+    const uniqueCampaigns = new Set(userDonations.map((d: any) => d.campaignId));
+    const campaignsSupported = uniqueCampaigns.size;
+    
+    // Get volunteer commitments
+    const allVolunteerCommitments = await kv.getByPrefix("volunteer:");
+    const userVolunteerCommitments = allVolunteerCommitments.filter((v: any) => v.volunteerId === user.id);
+    const hoursCommitted = userVolunteerCommitments.reduce((sum: number, v: any) => sum + (v.hours || 0), 0);
+    
+    return c.json({
+      totalDonated,
+      campaignsSupported,
+      donationCount: userDonations.length,
+      volunteerCommitments: userVolunteerCommitments.length,
+      hoursCommitted,
+    });
+  } catch (error) {
+    console.log("Error fetching user stats:", error);
+    return c.json({ error: "Failed to fetch user statistics" }, 500);
+  }
+});
+
+// Record a volunteer commitment
+app.post("/make-server-0f0fb175/volunteer", async (c) => {
+  try {
+    const accessToken = c.req.header('Authorization')?.split(' ')[1];
+    const { data: { user }, error: authError } = await supabase.auth.getUser(accessToken);
+    
+    if (!user?.id || authError) {
+      return c.json({ error: "Unauthorized - please sign in to volunteer" }, 401);
+    }
+
+    const { campaignId, hours, message } = await c.req.json();
+    
+    // Get the campaign
+    const campaign = await kv.get(campaignId);
+    if (!campaign) {
+      return c.json({ error: "Campaign not found" }, 404);
+    }
+
+    // Record the volunteer commitment
+    const volunteerId = `volunteer:${crypto.randomUUID()}`;
+    const volunteer = {
+      id: volunteerId,
+      campaignId,
+      volunteerId: user.id,
+      volunteerName: user.user_metadata?.name || 'Anonymous',
+      hours: hours || 0,
+      message: message || '',
+      timestamp: new Date().toISOString(),
+    };
+    
+    await kv.set(volunteerId, volunteer);
+
+    return c.json({ success: true, volunteer });
+  } catch (error) {
+    console.log("Error recording volunteer commitment:", error);
+    return c.json({ error: "Failed to record volunteer commitment" }, 500);
   }
 });
 
