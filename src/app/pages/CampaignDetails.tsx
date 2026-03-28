@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
-import { fetchWithAuth, supabase } from '../lib/supabase';
+import { fetchPublic, fetchWithAuth, supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 import { Loader2, MapPin, ExternalLink, Heart, ArrowLeft, DollarSign, Users } from 'lucide-react';
 
@@ -29,6 +29,9 @@ export function CampaignDetails() {
   const [loading, setLoading] = useState(true);
   const [donationAmount, setDonationAmount] = useState('');
   const [donating, setDonating] = useState(false);
+  const [volunteerHours, setVolunteerHours] = useState('');
+  const [volunteerMessage, setVolunteerMessage] = useState('');
+  const [volunteering, setVolunteering] = useState(false);
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -44,7 +47,7 @@ export function CampaignDetails() {
   const loadCampaign = async () => {
     setLoading(true);
     try {
-      const response = await fetchWithAuth('/campaigns');
+      const response = await fetchPublic('/campaigns');
       const foundCampaign = response.campaigns.find((c: any) => c.id === id);
       
       if (!foundCampaign) {
@@ -96,6 +99,44 @@ export function CampaignDetails() {
       toast.error(error.message || 'Failed to process donation');
     } finally {
       setDonating(false);
+    }
+  };
+
+  const handleVolunteer = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!user) {
+      toast.error('Please sign in to volunteer');
+      navigate('/signin');
+      return;
+    }
+
+    const hours = parseFloat(volunteerHours);
+    if (isNaN(hours) || hours <= 0) {
+      toast.error('Please enter a valid number of hours');
+      return;
+    }
+
+    setVolunteering(true);
+    try {
+      const response = await fetchWithAuth('/volunteer', {
+        method: 'POST',
+        body: JSON.stringify({
+          campaignId: campaign.id,
+          hours,
+          message: volunteerMessage,
+        }),
+      });
+
+      setCampaign(response.campaign);
+      setVolunteerHours('');
+      setVolunteerMessage('');
+      toast.success(`Thank you for volunteering ${hours} hours!`);
+    } catch (error: any) {
+      console.error('Volunteer error:', error);
+      toast.error(error.message || 'Failed to process volunteer request');
+    } finally {
+      setVolunteering(false);
     }
   };
 
@@ -290,6 +331,85 @@ export function CampaignDetails() {
                 <p>
                   This is a development platform. In production, donations would be processed
                   through secure payment providers like Stripe or PayPal.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Volunteer Card */}
+          <Card className="sticky top-4">
+            <CardHeader>
+              <CardTitle className="text-2xl">
+                Volunteer
+              </CardTitle>
+              <CardDescription>
+                Help make a difference
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {user ? (
+                <form onSubmit={handleVolunteer} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="hours">Hours to Volunteer</Label>
+                    <div className="relative">
+                      <Input
+                        id="hours"
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        placeholder="5"
+                        value={volunteerHours}
+                        onChange={(e) => setVolunteerHours(e.target.value)}
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message (optional)</Label>
+                    <Input
+                      id="message"
+                      type="text"
+                      placeholder="I'd like to help with..."
+                      value={volunteerMessage}
+                      onChange={(e) => setVolunteerMessage(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+
+                  <Button type="submit" disabled={volunteering} className="w-full" size="lg">
+                    {volunteering ? (
+                      <>
+                        <Loader2 className="size-4 mr-2 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <Heart className="size-4 mr-2" />
+                        Volunteer Now
+                      </>
+                    )}
+                  </Button>
+                </form>
+              ) : (
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600 text-center">
+                    Sign in to volunteer for this campaign
+                  </p>
+                  <Button asChild className="w-full" size="lg">
+                    <Link to="/signin">
+                      Sign In to Volunteer
+                    </Link>
+                  </Button>
+                </div>
+              )}
+
+              <div className="pt-4 border-t text-sm text-gray-600">
+                <p className="font-medium mb-2">📋 Note:</p>
+                <p>
+                  This is a development platform. In production, volunteer requests would be
+                  processed through a secure system.
                 </p>
               </div>
             </CardContent>

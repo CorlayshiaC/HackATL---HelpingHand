@@ -258,8 +258,8 @@ export function MapSelector({ onLocationSelect, initialLocation }: MapSelectorPr
       </div>
 
       {/* Map */}
-      <div className="relative rounded-lg overflow-hidden border-2 border-gray-200">
-        <div ref={mapRef} className="h-[400px] w-full" />
+      <div className="relative rounded-xl overflow-hidden border border-gray-300 shadow-lg">
+        <div ref={mapRef} className="h-[450px] w-full" />
         <div className="absolute top-4 right-4 z-[1000]">
           <Button
             onClick={getCurrentLocation}

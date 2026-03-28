@@ -5,10 +5,11 @@ import { Button } from '../components/ui/button';
 import { Checkbox } from '../components/ui/checkbox';
 import { Label } from '../components/ui/label';
 import { Slider } from '../components/ui/slider';
-import { fetchWithAuth } from '../lib/supabase';
+import { fetchPublic } from '../lib/supabase';
 import { toast } from 'sonner';
 import { Sparkles, Loader2, MapPin, ArrowRight, ArrowLeft } from 'lucide-react';
 import { MapSelector } from '../components/MapSelector';
+import { DollarSign, Users, Heart } from 'lucide-react';
 
 const CATEGORIES = [
   { id: 'education', label: 'Education & Learning', emoji: '📚' },
@@ -62,7 +63,7 @@ export function Quiz() {
         location,
       };
 
-      const response = await fetchWithAuth('/match', {
+      const response = await fetchPublic('/match', {
         method: 'POST',
         body: JSON.stringify({ preferences, location }),
       });
@@ -263,70 +264,122 @@ export function Quiz() {
               ) : (
                 <>
                   <div className="grid gap-6">
-                    {matches.map((campaign) => (
-                      <Card key={campaign.id} className="bg-white border-gray-200 hover:shadow-lg transition-shadow">
-                        <CardHeader>
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <CardTitle className="text-xl mb-2 text-gray-900">{campaign.title}</CardTitle>
-                              <CardDescription className="text-base">
-                                {campaign.description}
-                              </CardDescription>
-                            </div>
-                            <div className="ml-4 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                              {CATEGORIES.find((c) => c.id === campaign.category)?.emoji}{' '}
-                              {CATEGORIES.find((c) => c.id === campaign.category)?.label}
-                            </div>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-4">
-                            <div>
-                              <div className="flex justify-between text-sm mb-2">
-                                <span className="text-gray-600">Progress</span>
-                                <span className="font-medium text-gray-900">
-                                  ${campaign.currentAmount?.toLocaleString() || 0} of $
-                                  {campaign.goalAmount?.toLocaleString()}
-                                </span>
+                    {matches.map((campaign) => {
+                      const progress = ((campaign.currentAmount || 0) / campaign.goalAmount) * 100;
+                      const needsUrgent = campaign.urgent;
+                      
+                      return (
+                        <Card 
+                          key={campaign.id} 
+                          className={`bg-white hover:shadow-xl transition-all cursor-pointer ${
+                            needsUrgent ? 'border-2 border-red-200' : 'border-gray-200'
+                          }`}
+                          onClick={() => navigate(`/campaign/${campaign.id}`)}
+                        >
+                          <CardHeader>
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                  {needsUrgent && (
+                                    <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">
+                                      URGENT
+                                    </span>
+                                  )}
+                                  {campaign.campaignType === 'personal' && (
+                                    <span className="px-2 py-1 bg-pink-100 text-pink-700 text-xs font-medium rounded-full">
+                                      Personal
+                                    </span>
+                                  )}
+                                </div>
+                                <CardTitle className="text-xl mb-2 text-gray-900">{campaign.title}</CardTitle>
+                                <CardDescription className="text-base line-clamp-2">
+                                  {campaign.personalStory || campaign.description}
+                                </CardDescription>
                               </div>
-                              <div className="w-full bg-gray-200 rounded-full h-2">
-                                <div
-                                  className="bg-gray-700 h-2 rounded-full transition-all"
-                                  style={{
-                                    width: `${Math.min(
-                                      ((campaign.currentAmount || 0) / campaign.goalAmount) * 100,
-                                      100
-                                    )}%`,
-                                  }}
-                                />
+                              <div className="ml-4 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium whitespace-nowrap">
+                                {CATEGORIES.find((c) => c.id === campaign.category)?.emoji}{' '}
+                                {CATEGORIES.find((c) => c.id === campaign.category)?.label}
                               </div>
                             </div>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="space-y-4">
+                              {/* Progress Bar */}
+                              <div>
+                                <div className="flex justify-between text-sm mb-2">
+                                  <span className="text-gray-600">
+                                    {progress.toFixed(0)}% funded
+                                  </span>
+                                  <span className="font-medium text-gray-900">
+                                    ${campaign.currentAmount?.toLocaleString() || 0} of $
+                                    {campaign.goalAmount?.toLocaleString()}
+                                  </span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-3">
+                                  <div
+                                    className="bg-gradient-to-r from-gray-600 to-gray-800 h-3 rounded-full transition-all"
+                                    style={{
+                                      width: `${Math.min(progress, 100)}%`,
+                                    }}
+                                  />
+                                </div>
+                              </div>
 
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2 text-sm text-gray-600">
-                                <MapPin className="size-4" />
-                                <span>{campaign.locationName || 'Location available'}</span>
+                              {/* Need Type Badges */}
+                              <div className="flex flex-wrap gap-2">
+                                {(campaign.needType === 'money' || campaign.needType === 'both') && (
+                                  <span className="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full flex items-center gap-1">
+                                    <DollarSign className="size-3" />
+                                    Donations needed
+                                  </span>
+                                )}
+                                {campaign.volunteerNeeds && (
+                                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full flex items-center gap-1">
+                                    <Users className="size-3" />
+                                    Volunteers needed
+                                  </span>
+                                )}
+                                {campaign.goodsNeeded && (
+                                  <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-full flex items-center gap-1">
+                                    <Heart className="size-3" />
+                                    Goods needed
+                                  </span>
+                                )}
                               </div>
-                              <Button
-                                onClick={() => navigate(`/campaign/${campaign.id}`)}
-                                size="sm"
-                                className="bg-gray-700 hover:bg-gray-800"
-                              >
-                                View Campaign
-                              </Button>
+
+                              {/* Location and Action */}
+                              <div className="flex items-center justify-between pt-2">
+                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                  <MapPin className="size-4" />
+                                  <span>{campaign.locationName || 'Location available'}</span>
+                                </div>
+                                <Button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/campaign/${campaign.id}`);
+                                  }}
+                                  size="sm"
+                                  className="bg-gray-700 hover:bg-gray-800"
+                                >
+                                  View Details
+                                  <ArrowRight className="size-4 ml-2" />
+                                </Button>
+                              </div>
                             </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
 
                   <div className="flex gap-4 justify-center mt-8">
                     <Button onClick={() => setStep(1)} variant="outline" className="border-gray-200">
+                      <ArrowLeft className="size-4 mr-2" />
                       Retake Quiz
                     </Button>
                     <Button onClick={() => navigate('/dashboard')} className="bg-gray-700 hover:bg-gray-800">
                       Browse All Campaigns
+                      <ArrowRight className="size-4 ml-2" />
                     </Button>
                   </div>
                 </>
