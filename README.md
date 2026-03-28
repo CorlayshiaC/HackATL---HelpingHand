@@ -1,5 +1,5 @@
 
-  # AI Community Donation Platform
+  # HackAtlanta MysteryGang
 
   This is a code bundle for AI Community Donation Platform. The original project is available at https://www.figma.com/design/7OfV8FwOKwQm9simcEFeSO/AI-Community-Donation-Platform.
 
