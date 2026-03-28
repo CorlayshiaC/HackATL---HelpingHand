@@ -60,7 +60,7 @@ export function Home() {
             
             <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
               Small gifts,{' '}
-              <span className="text-gray-400">big change</span>
+              <span className="text-gray-400">BIG CHANGE</span>
               <br />
               in your community
             </h1>
