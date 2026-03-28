@@ -39,11 +39,17 @@ export async function fetchPublic(endpoint: string, options: RequestInit = {}) {
 
 // For endpoints that require authentication (donations, user actions)
 export async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
-  const { data: { session } } = await supabase.auth.getSession();
-  const token = session?.access_token || publicAnonKey;
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  
+  if (sessionError || !session?.access_token) {
+    console.error('No valid session found for authenticated request');
+    throw new Error('Authentication required. Please sign in.');
+  }
+  
+  const token = session.access_token;
   
   const fullUrl = `${apiUrl}/make-server-0f0fb175${endpoint}`;
-  console.log('Fetching:', fullUrl);
+  console.log('Fetching (authenticated):', fullUrl);
   
   const response = await fetch(fullUrl, {
     ...options,
@@ -56,7 +62,7 @@ export async function fetchWithAuth(endpoint: string, options: RequestInit = {})
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('Request failed:', response.status, errorText);
+    console.error('Authenticated request failed:', response.status, errorText);
     let errorMessage = 'Request failed';
     try {
       const errorJson = JSON.parse(errorText);

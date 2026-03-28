@@ -7,7 +7,6 @@ import { fetchPublic, supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 import { Loader2, Search, Plus, MapPin, Heart, TrendingUp } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { UserStats } from '../components/UserStats';
 
 const CATEGORIES = [
   { id: 'education', label: 'Education & Learning', emoji: '📚' },
@@ -88,14 +87,6 @@ export function Dashboard() {
               Discover causes making a difference in communities worldwide
             </p>
           </div>
-
-          {/* User Stats (only shown when logged in) */}
-          {user && (
-            <>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Impact</h2>
-              <UserStats />
-            </>
-          )}
 
           {/* General Stats */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">

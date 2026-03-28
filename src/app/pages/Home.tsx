@@ -94,7 +94,7 @@ export function Home() {
 
             <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
               Small gifts,{" "}
-              <span className="text-gray-400">BIG CHANGE</span>
+              <span className="text-blue-500">BIG CHANGE</span>
               <br />
               in your community
             </h1>
@@ -137,7 +137,7 @@ export function Home() {
             <Card className="bg-white border-gray-200 text-center">
               <CardContent className="pt-12 pb-8">
                 <div className="inline-flex items-center justify-center size-12 rounded-full bg-gray-100 mb-4">
-                  <Users className="size-6 text-gray-600" />
+                  <Users className="size-6 text-blue-500" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   Local
@@ -151,7 +151,7 @@ export function Home() {
             <Card className="bg-white border-gray-200 text-center">
               <CardContent className="pt-12 pb-8">
                 <div className="inline-flex items-center justify-center size-12 rounded-full bg-gray-100 mb-4">
-                  <DollarSign className="size-6 text-gray-600" />
+                  <DollarSign className="size-6 text-green-500" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   $1+
@@ -165,7 +165,7 @@ export function Home() {
             <Card className="bg-white border-gray-200 text-center">
               <CardContent className="pt-12 pb-8">
                 <div className="inline-flex items-center justify-center size-12 rounded-full bg-gray-100 mb-4">
-                  <Globe className="size-6 text-gray-600" />
+                  <Globe className="size-6 text-blue-500" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   Global
@@ -237,7 +237,7 @@ export function Home() {
         {/* Featured Causes */}
         <section className="max-w-6xl mx-auto py-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-4xl font-bold text-gray-900">
+            <h2 className="text-4xl font-bold text-blue-500">
               Featured causes
             </h2>
             <Button
@@ -301,7 +301,7 @@ export function Home() {
           <section className="max-w-6xl mx-auto py-16">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-2">
+                <h2 className="text-4xl font-bold text-green-500 mb-2">
                   Urgent needs
                 </h2>
                 <p className="text-gray-600">
@@ -369,7 +369,7 @@ export function Home() {
           <section className="max-w-6xl mx-auto py-16 pb-24">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-2">
+                <h2 className="text-4xl font-bold text-blue-500 mb-2">
                   Support your neighbors
                 </h2>
                 <p className="text-gray-600">

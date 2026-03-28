@@ -178,4 +178,19 @@
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
   }
+
+  /* Custom styles for Leaflet map markers */
+  .custom-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .leaflet-popup-content-wrapper {
+    border-radius: 0.5rem;
+    padding: 0;
+  }
+
+  .leaflet-popup-content {
+    margin: 0;
+  }
 }

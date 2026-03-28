@@ -35,32 +35,38 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5">
             <div className="size-10 bg-gray-200 rounded-full flex items-center justify-center">
-              <Heart className="size-5 fill-gray-500 text-gray-500" />
+              <Heart className="size-5 fill-blue-500 text-green-500" />
             </div>
-            <span className="text-xl font-semibold text-gray-900">GiveLocal</span>
+            <span>
+              <span className="text-xl font-semibold text-blue-500">Helping</span>
+              <span className="text-xl font-semibold text-green-500">Hand</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/" className="flex items-center gap-2 text-sm text-green-500 hover:text-gray-900 transition-colors">
               <Home className="size-4" />
               <span>Home</span>
             </Link>
-            <Link to="/dashboard" className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/dashboard" className="flex items-center gap-2 text-sm text-blue-500 hover:text-gray-900 transition-colors">
               <Search className="size-4" />
               <span>Browse</span>
             </Link>
-            <Link to="/quiz" className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/quiz" className="flex items-center gap-2 text-sm text-green-500 hover:text-gray-900 transition-colors">
               <Sparkles className="size-4" />
               <span>Match</span>
             </Link>
             {user && (
               <>
-                <Link to="/create" className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                <Link to="/create" className="flex items-center gap-2 text-sm text-blue-500 hover:text-gray-900 transition-colors">
                   <Target className="size-4" />
                   <span>Start</span>
                 </Link>
-                <Link to="/dashboard" className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                <Link
+                  to="/impact"
+                  className="flex items-center gap-2 text-sm text-green-500 hover:text-gray-900 transition-colors"
+                >
                   <TrendingUp className="size-4" />
                   <span>Impact</span>
                 </Link>
@@ -76,7 +82,7 @@ export function Header() {
                   <User className="size-4 text-gray-500" />
                   <span>{user.user_metadata?.name}</span>
                 </div>
-                <Button onClick={handleSignOut} variant="ghost" size="sm" className="text-sm">
+                <Button onClick={handleSignOut} variant="ghost" size="sm" className="text-sm bg-blue-500">
                   <LogOut className="size-4 mr-2" />
                   Sign Out
                 </Button>
@@ -86,7 +92,7 @@ export function Header() {
                 <Button asChild variant="ghost" size="sm" className="text-sm">
                   <Link to="/signin">Sign In</Link>
                 </Button>
-                <Button asChild variant="ghost" size="sm" className="text-sm">
+                <Button asChild variant="ghost" size="sm" className="text-sm bg-blue-300">
                   <Link to="/signup">Sign Up</Link>
                 </Button>
               </>
@@ -94,7 +100,7 @@ export function Header() {
             <Button 
               variant="secondary" 
               size="sm" 
-              className="bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-full gap-2"
+              className="bg-purple-300 hover:bg-gray-300 text-gray-900 rounded-full gap-2"
             >
               <MessageSquare className="size-4" />
               <span>AI Helper</span>
@@ -148,7 +154,7 @@ export function Header() {
                   <span>Start</span>
                 </Link>
                 <Link
-                  to="/dashboard"
+                  to="/impact"
                   className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
                   onClick={() => setMenuOpen(false)}
                 >

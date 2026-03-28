@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { DollarSign, Users, Heart, Clock } from 'lucide-react';
-import { fetchWithAuth } from '../lib/supabase';
+import { fetchWithAuth, supabase } from '../lib/supabase';
 
 export function UserStats() {
   const [stats, setStats] = useState({
@@ -13,14 +13,30 @@ export function UserStats() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    loadStats();
+    checkAuthAndLoadStats();
   }, []);
 
-  const loadStats = async () => {
+  const checkAuthAndLoadStats = async () => {
     try {
+      setLoading(true);
       setError(false);
+      
+      // Check if user has a valid session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        console.log('No valid session found, skipping stats load');
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+      
+      setIsAuthenticated(true);
+      
+      // Load stats
       const response = await fetchWithAuth('/user-stats');
       setStats(response);
     } catch (error) {
@@ -53,79 +69,82 @@ export function UserStats() {
     );
   }
 
-  if (error) {
-    return null; // Silently hide stats on error
+  if (!isAuthenticated || error) {
+    return null; // Silently hide stats if not authenticated or on error
   }
 
   return (
-    <div className="grid md:grid-cols-4 gap-4 mb-8">
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-gray-600">
-            Total Donated
-          </CardTitle>
-          <DollarSign className="h-4 w-4 text-green-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-gray-900">
-            ${stats.totalDonated.toLocaleString()}
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            {stats.donationCount} {stats.donationCount === 1 ? 'donation' : 'donations'}
-          </p>
-        </CardContent>
-      </Card>
+    <>
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Impact</h2>
+      <div className="grid md:grid-cols-4 gap-4 mb-8">
+        <Card className="bg-white border-gray-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Total Donated
+            </CardTitle>
+            <DollarSign className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900">
+              ${stats.totalDonated.toLocaleString()}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {stats.donationCount} {stats.donationCount === 1 ? 'donation' : 'donations'}
+            </p>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-gray-600">
-            Campaigns Supported
-          </CardTitle>
-          <Users className="h-4 w-4 text-blue-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-gray-900">
-            {stats.campaignsSupported}
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Different causes helped
-          </p>
-        </CardContent>
-      </Card>
+        <Card className="bg-white border-gray-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Campaigns Supported
+            </CardTitle>
+            <Users className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900">
+              {stats.campaignsSupported}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Different causes helped
+            </p>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-gray-600">
-            Volunteer Hours
-          </CardTitle>
-          <Clock className="h-4 w-4 text-purple-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-gray-900">
-            {stats.hoursCommitted}
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            {stats.volunteerCommitments} {stats.volunteerCommitments === 1 ? 'commitment' : 'commitments'}
-          </p>
-        </CardContent>
-      </Card>
+        <Card className="bg-white border-gray-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Volunteer Hours
+            </CardTitle>
+            <Clock className="h-4 w-4 text-purple-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900">
+              {stats.hoursCommitted}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {stats.volunteerCommitments} {stats.volunteerCommitments === 1 ? 'commitment' : 'commitments'}
+            </p>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-gray-600">
-            Community Impact
-          </CardTitle>
-          <Heart className="h-4 w-4 text-red-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-gray-900">
-            {stats.totalDonated + (stats.hoursCommitted * 25)}
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Total value contributed
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+        <Card className="bg-white border-gray-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Community Impact
+            </CardTitle>
+            <Heart className="h-4 w-4 text-red-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900">
+              {stats.totalDonated + (stats.hoursCommitted * 25)}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Total value contributed
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }
